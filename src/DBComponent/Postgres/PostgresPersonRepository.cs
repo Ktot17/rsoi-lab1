@@ -28,10 +28,17 @@ public class PostgresPersonRepository(PostgresDbContext context) : IPersonReposi
     public async Task<List<Person>> GetPersonsAsync() => 
         await context.Set<PersonDb>().Select(p => p.ToBlModel()).ToListAsync();
 
-    public async Task UpdatePersonAsync(Person person)
+    public async Task<Person> UpdatePersonAsync(Person person)
     {
         var existing = await context.FindAsync<PersonDb>(person.Id) ?? throw new EntityNotFoundException(typeof(PersonDb));
-        context.Entry(existing).CurrentValues.SetValues(new PersonDb(person));
+        var newEntry = new PersonDb(
+            person.Id,
+            person.Name,
+            person.Age ?? existing.Age,
+            person.Address ?? existing.Address,
+            person.Work ?? existing.Work);
+        context.Entry(existing).CurrentValues.SetValues(newEntry);
         await context.SaveChangesAsync();
+        return newEntry.ToBlModel();
     }
 }

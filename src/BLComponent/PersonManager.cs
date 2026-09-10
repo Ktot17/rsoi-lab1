@@ -10,5 +10,5 @@ public class PersonManager(IPersonRepository personRepository) : IPersonManager
     public async Task RemovePersonAsync(int id) => await personRepository.RemovePersonAsync(id);
     public async Task<Person?> FindPersonAsync(int id) => await personRepository.FindPersonAsync(id);
     public async Task<List<Person>> GetPersonsAsync() => await personRepository.GetPersonsAsync();
-    public async Task UpdatePersonAsync(Person person) => await personRepository.UpdatePersonAsync(person);
+    public async Task<Person> UpdatePersonAsync(Person person) => await personRepository.UpdatePersonAsync(person);
 }
