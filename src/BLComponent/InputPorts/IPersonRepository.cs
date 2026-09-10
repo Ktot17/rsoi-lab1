@@ -8,5 +8,5 @@ public interface IPersonRepository
     public Task RemovePersonAsync(int id);
     public Task<Person?> FindPersonAsync(int id);
     public Task<List<Person>> GetPersonsAsync();
-    public Task UpdatePersonAsync(Person person);
+    public Task<Person> UpdatePersonAsync(Person person);
 }

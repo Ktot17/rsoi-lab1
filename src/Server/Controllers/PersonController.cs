@@ -45,7 +45,7 @@ public class PersonController(IPersonManager personManager) : ControllerBase
         var person = personRequest.ToPerson(id);
         try
         {
-            await personManager.UpdatePersonAsync(person);
+            person = await personManager.UpdatePersonAsync(person);
         }
         catch (EntityNotFoundException)
         {
