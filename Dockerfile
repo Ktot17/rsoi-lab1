@@ -6,13 +6,13 @@ EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
-COPY ["src/Server/Server.csproj", "Server/"]
-COPY ["src/BLComponent/BLComponent.csproj", "BLComponent/"]
-COPY ["src/DBComponent/DBComponent.csproj", "DBComponent/"]
-RUN dotnet restore "Server/Server.csproj"
-COPY . .
-WORKDIR "/src/Server"
+WORKDIR /app
+COPY ["src/Server/Server.csproj", "src/Server/"]
+COPY ["src/BLComponent/BLComponent.csproj", "src/BLComponent/"]
+COPY ["src/DBComponent/DBComponent.csproj", "src/DBComponent/"]
+RUN dotnet restore "src/Server/Server.csproj"
+COPY src/ src/
+WORKDIR "/app/src/Server"
 RUN dotnet build "./Server.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
