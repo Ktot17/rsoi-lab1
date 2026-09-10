@@ -7,9 +7,9 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Server/Server.csproj", "Server/"]
-COPY ["BLComponent/BLComponent.csproj", "BLComponent/"]
-COPY ["DBComponent/DBComponent.csproj", "DBComponent/"]
+COPY ["src/Server/Server.csproj", "Server/"]
+COPY ["src/BLComponent/BLComponent.csproj", "BLComponent/"]
+COPY ["src/DBComponent/DBComponent.csproj", "DBComponent/"]
 RUN dotnet restore "Server/Server.csproj"
 COPY . .
 WORKDIR "/src/Server"
