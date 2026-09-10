@@ -17,6 +17,12 @@ builder.Services.AddScoped<IPersonManager, PersonManager>();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<PostgresDbContext>();
+    await db.Database.EnsureCreatedAsync().ConfigureAwait(false);
+}
+
 app.MapControllers();
 app.MapGet("api/v1/health", () => Results.Ok("Healthy"));
 
